@@ -1,31 +1,22 @@
-async function CreateModel(gl,shader){
+class Model{
+    constructor(gl,path){
+        this.gl = gl
+        this.mo_matrix = mat4.create()
+        this.meshes = []
+        this.CreateModel(path)
+    }
+    async CreateModel(path){
+        var geometry = await loadOBJ(path)
+        var shader = await CreateShader(this.gl)
 
-    var geometry = await loadOBJ('./models/worzala/worzala.obj')
-
-    var shader = await CreateShader(gl)
-
-    var meshes = []
-    
-    var mesh = new Mesh(gl, shader, geometry)
-
-    meshes.push(mesh)
-
-    var mo_matrix = mat4.create()
-
-    return {
-        mo_matrix,
-
-        render(proj_matrix,view_matrix){
-
-            for(let mesh of meshes){
-                
-                mesh.Render(proj_matrix,view_matrix,this.mo_matrix)
-                
-            }
-            
+        var mesh = new Mesh(this.gl, shader, geometry)
+        this.meshes.push(mesh)
+    }
+    Render(proj_matrix,view_matrix){
+        for(let mesh of this.meshes){
+            mesh.Render(proj_matrix,view_matrix,this.mo_matrix) 
         }
     }
-
 }
 
 async function loadOBJ(path){
