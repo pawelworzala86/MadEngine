@@ -1,26 +1,13 @@
 async function CreateModel(gl,shader){
 
-    var outmodel = await loadOBJ('./models/worzala/worzala.obj')
-    //var outmodel2 = await loadOBJ('./models/bryla/scene2.obj')
+    var geometry = await loadOBJ('./models/worzala/worzala.obj')
 
-    //console.log(model)
-    console.log(outmodel)
-
-    /*var percent = document.querySelector('#redraw').value/100
-
-    for(let i=0;i<outmodel1.vertices.length;i++){
-        outmodel1.vertices[i] = ((outmodel1.vertices[i]*percent)+(outmodel2.vertices[i]*(1.0-percent)))
-    }*/
-
-        var geometry = outmodel
-
-
-   var shader = await CreateShader(gl)
+    var shader = await CreateShader(gl)
 
     var meshes = []
     
-    var mesh = CreateMesh(gl, shader, geometry)
-    //mesh.type = gl.LINES
+    var mesh = new Mesh(gl, shader, geometry)
+
     meshes.push(mesh)
 
     var mo_matrix = mat4.create()
@@ -32,7 +19,7 @@ async function CreateModel(gl,shader){
 
             for(let mesh of meshes){
                 
-                mesh.render(proj_matrix,view_matrix,this.mo_matrix)
+                mesh.Render(proj_matrix,view_matrix,this.mo_matrix)
                 
             }
             
