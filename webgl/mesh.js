@@ -1,16 +1,23 @@
-class Mesh{
+class Mesh extends Scene{
    constructor(gl,meshshader,geometry){
-      this.gl = gl
+      super(gl)
       this.type = this.gl.TRIANGLES
       this.buffer={}
       this.shader = meshshader
       this.geometry = geometry
 
-      this.buffer.vertex = this.CreateBuffer(gl.ARRAY_BUFFER,new Float32Array(this.geometry.vertices))
-      this.buffer.normals = this.CreateBuffer(gl.ARRAY_BUFFER,new Float32Array(this.geometry.normals))
+      this.CreateBuffers()
 
       if(geometry.indices){
          this.buffer.index = this.CreateBuffer(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(this.geometry.indices))
+      }
+   }
+   CreateBuffers(){
+      for(const name of Object.keys(this.geometry)){
+         this.buffer[name] = this.CreateBuffer(
+            name=='indices'?this.gl.ELEMENT_ARRAY_BUFFER:this.gl.ARRAY_BUFFER,
+            name=='indices'?new Uint16Array(this.geometry[name]):new Float32Array(this.geometry[name])
+            )
       }
    }
    CreateBuffer(type,data){
@@ -24,18 +31,26 @@ class Mesh{
       this.gl.uniformMatrix4fv(uniform, false, value)
    }
    SetAttributeBuffer(name,buffer,elemCount){
-      this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buffer)
+      this.gl.bindBuffer(name=='indices'?this.gl.ELEMENT_ARRAY_BUFFER:this.gl.ARRAY_BUFFER, buffer)
       const attribute = this.gl.getAttribLocation(this.shader.program, name)
       if(attribute>-1){
          this.gl.vertexAttribPointer(attribute, elemCount, this.gl.FLOAT, false,0,0)
          this.gl.enableVertexAttribArray(attribute)
       }
    }
+   SetAttributes(){
+      for(const name of Object.keys(this.buffer)){
+         var size=3
+         if(name=='coord'){
+            size=2
+         }
+         this.SetAttributeBuffer(name, this.buffer[name],3)
+      }
+   }
    Render(proj_matrix,view_matrix,mo_matrix){
       this.gl.useProgram(this.shader.program)
 
-      this.SetAttributeBuffer('position', this.buffer.vertex,3)
-      this.SetAttributeBuffer('normals', this.buffer.normals,3)
+      this.SetAttributes()
 
       this.SetAttribute4M('Pmatrix', proj_matrix)
       this.SetAttribute4M('Vmatrix', view_matrix)
@@ -46,7 +61,7 @@ class Mesh{
          this.gl.drawElements(this.type, this.geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
       }else{
          this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.buffer.vertex);
-         this.gl.drawArrays(this.type, 0, this.geometry.vertices.length/3);
+         this.gl.drawArrays(this.type, 0, this.geometry.position.length/3);
       }    
    }
 }

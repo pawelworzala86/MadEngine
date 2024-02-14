@@ -85,20 +85,14 @@ function CreateControls(canvas){
       time_old = time; 
       gl.enable(gl.DEPTH_TEST);
 
-      // gl.depthFunc(gl.LEQUAL);
+      gl.depthFunc(gl.LEQUAL);
 
       gl.clearColor(0.5, 0.5, 0.5, 0.9);
       gl.clearDepth(1.0);
       gl.viewport(0.0, 0.0, canvas.width, canvas.height);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-
-
-
-
          model.Render(proj_matrix,view_matrix)
-      
-
 
       window.requestAnimationFrame(animate);
    }

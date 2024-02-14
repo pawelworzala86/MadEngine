@@ -24,19 +24,19 @@ async function loadOBJ(path){
 
     const lines = obj.split('\n')
 
-    var model = {vertices:[],normals:[],coords:[],indices:[],}
-    var outmodel = {vertices:[],normals:[],coords:[]}
+    var model = {position:[],normal:[],coord:[],indices:[],}
+    var outmodel = {position:[],normal:[],coord:[]}
 
     //console.log(lines[0])
     var FUNCS = {
         v(params){
-            model.vertices.push(params.map(parseFloat))
+            model.position.push(params.map(parseFloat))
         },
         vn(params){
-        model.normals.push(params.map(parseFloat))
+        model.normal.push(params.map(parseFloat))
         },
         vt(params){
-        model.coords.push(params.map(parseFloat))
+        model.coord.push(params.map(parseFloat))
         },
         f(params){
             params=params.map(f=>{
@@ -45,20 +45,20 @@ async function loadOBJ(path){
                 //model.indices.push(...arr)
                 return arr
             })
-            outmodel.vertices.push(
-                ...model.vertices[params[0][0]-1],
-                ...model.vertices[params[1][0]-1],
-                ...model.vertices[params[2][0]-1]
+            outmodel.position.push(
+                ...model.position[params[0][0]-1],
+                ...model.position[params[1][0]-1],
+                ...model.position[params[2][0]-1]
             )
-            outmodel.coords.push(
-                ...model.coords[params[0][1]-1],
-                ...model.coords[params[1][1]-1],
-                ...model.coords[params[2][1]-1]
+            outmodel.coord.push(
+                ...model.coord[params[0][1]-1],
+                ...model.coord[params[1][1]-1],
+                ...model.coord[params[2][1]-1]
             )
-            outmodel.normals.push(
-                ...model.normals[params[0][2]-1],
-                ...model.normals[params[1][2]-1],
-                ...model.normals[params[2][2]-1]
+            outmodel.normal.push(
+                ...model.normal[params[0][2]-1],
+                ...model.normal[params[1][2]-1],
+                ...model.normal[params[2][2]-1]
             )
             //model.indices.push(params[0][1],params[1][1],params[2][1])
             //model.indices.push(params[0][2],params[1][2],params[2][2])
