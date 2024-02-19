@@ -77,10 +77,10 @@ function CreateControls(canvas){
          THETA+=dX, PHI+=dY;
       }
 
-      model.mo_matrix = mat4.create()
+      model.modelMatrix = mat4.create()
 
-      mat4.rotateY(model.mo_matrix,model.mo_matrix,THETA)
-      mat4.rotateX(model.mo_matrix,model.mo_matrix,PHI)
+      mat4.rotateY(model.modelMatrix,model.modelMatrix,THETA)
+      mat4.rotateX(model.modelMatrix,model.modelMatrix,PHI)
 
       time_old = time; 
       gl.enable(gl.DEPTH_TEST);
@@ -92,7 +92,7 @@ function CreateControls(canvas){
       gl.viewport(0.0, 0.0, canvas.width, canvas.height);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-         model.Render(proj_matrix,view_matrix)
+      model.Render(proj_matrix,view_matrix)
 
       window.requestAnimationFrame(animate);
    }

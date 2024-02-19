@@ -47,7 +47,7 @@ class Mesh extends Scene{
          this.SetAttributeBuffer(name, this.buffer[name],3)
       }
    }
-   Render(proj_matrix,view_matrix,mo_matrix){
+   Draw(proj_matrix,view_matrix,mo_matrix){
       this.gl.useProgram(this.shader.program)
 
       this.SetAttributes()

@@ -1,8 +1,7 @@
-class Model{
+class Model extends Scene{
     constructor(gl,path){
-        this.gl = gl
+        super(gl)
         this.mo_matrix = mat4.create()
-        this.meshes = []
         this.CreateModel(path)
     }
     async CreateModel(path){
@@ -10,12 +9,7 @@ class Model{
         var shader = await CreateShader(this.gl)
 
         var mesh = new Mesh(this.gl, shader, geometry)
-        this.meshes.push(mesh)
-    }
-    Render(proj_matrix,view_matrix){
-        for(let mesh of this.meshes){
-            mesh.Render(proj_matrix,view_matrix,this.mo_matrix) 
-        }
+        this.childrens.push(mesh)
     }
 }
 
