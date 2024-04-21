@@ -5,11 +5,13 @@ class Model extends Scene{
         this.CreateModel(path)
     }
     async CreateModel(path){
-        var geometry = await loadOBJ(path)
+        var geometries = await loadOBJ(path)
         var shader = await CreateShader(this.gl)
 
-        var mesh = new Mesh(this.gl, shader, geometry)
-        this.childrens.push(mesh)
+        for(let geom of geometries){
+            var mesh = new Mesh(this.gl, shader, geom)
+            this.childrens.push(mesh)
+        }
     }
 }
 
@@ -18,11 +20,20 @@ async function loadOBJ(path){
 
     const lines = obj.split('\n')
 
+    var meshes = []
     var model = {position:[],normal:[],coord:[],indices:[],}
-    var outmodel = {position:[],normal:[],coord:[]}
+    var outmodel
+    function newMesh(){
+        //model = {position:[],normal:[],coord:[],indices:[],}
+        outmodel = {position:[],normal:[],coord:[]}
+        meshes.push(outmodel)
+    }
 
     //console.log(lines[0])
     var FUNCS = {
+        o(params){
+            newMesh()
+        },
         v(params){
             model.position.push(params.map(parseFloat))
         },
@@ -73,5 +84,5 @@ async function loadOBJ(path){
 
     }
 
-    return outmodel
+    return meshes
 }
