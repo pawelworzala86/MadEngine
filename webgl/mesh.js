@@ -8,9 +8,9 @@ class Mesh extends Scene{
 
       this.CreateBuffers()
 
-      if(geometry.indices){
-         this.buffer.index = this.CreateBuffer(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(this.geometry.indices))
-      }
+      //if(geometry.indices){
+      //   this.buffer.index = this.CreateBuffer(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(this.geometry.indices))
+      //}
    }
    CreateBuffers(){
       for(const name of Object.keys(this.geometry)){
@@ -57,7 +57,7 @@ class Mesh extends Scene{
       this.SetAttribute4M('Mmatrix', mo_matrix)
                
       if(this.geometry.indices){
-         this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.buffer.index);
+         this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.buffer.indices);
          this.gl.drawElements(this.type, this.geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
       }else{
          this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.buffer.vertex);

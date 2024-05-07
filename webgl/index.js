@@ -1,14 +1,15 @@
 const mat4 = glMatrix.mat4
 const vec3 = glMatrix.vec3
 
+var time_old = 0
 //controls
+/*
 var AMORTIZATION = 0.95
 var drag = false
 var old_x, old_y
 var dX = 0, dY = 0
 var THETA = 0
 var PHI = 0
-var time_old = 0
 //
 function CreateControls(canvas){
    var mouseDown = function(e) {
@@ -36,7 +37,7 @@ function CreateControls(canvas){
    canvas.addEventListener("mouseup", mouseUp, false);
    canvas.addEventListener("mouseout", mouseUp, false);
    canvas.addEventListener("mousemove", mouseMove, false);
-}
+}*/
 
 ;(async function(){
 
@@ -48,8 +49,8 @@ function CreateControls(canvas){
 
 
 
-   var model = new Model(gl, './models/worzala/worzala.obj')
-
+   var model = new Model(gl, './models/worzala/worzala.gltf')
+   //mat4.scale(model.modelMatrix, model.modelMatrix, [3.0,3.0,3.0])
 
 
 
@@ -63,7 +64,7 @@ function CreateControls(canvas){
    
    
 
-   CreateControls(canvas)
+   //CreateControls(canvas)
 
 
 
@@ -72,15 +73,15 @@ function CreateControls(canvas){
    var animate = function(time) {
       var dt = time-time_old;
 
-      if (!drag) {
+      /*if (!drag) {
          dX *= AMORTIZATION, dY*=AMORTIZATION;
          THETA+=dX, PHI+=dY;
-      }
+      }*/
 
-      model.modelMatrix = mat4.create()
+      //model.modelMatrix = mat4.create()
 
-      mat4.rotateY(model.modelMatrix,model.modelMatrix,THETA)
-      mat4.rotateX(model.modelMatrix,model.modelMatrix,PHI)
+      //mat4.rotateY(model.modelMatrix,model.modelMatrix,THETA)
+      //mat4.rotateX(model.modelMatrix,model.modelMatrix,PHI)
 
       time_old = time; 
       gl.enable(gl.DEPTH_TEST);
