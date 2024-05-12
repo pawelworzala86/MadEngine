@@ -1,7 +1,14 @@
-async function CreateShader(gl){
+var SHADERCACHE = {}
 
-    var vertCode = await get('/shaders/default.vert')
-         var fragCode = await get('/shaders/default.frag')
+async function CreateShader(gl){
+   var name = 'default'
+
+   if(SHADERCACHE[name]){
+      return SHADERCACHE[name]
+   }
+
+    var vertCode = await get('/shaders/'+name+'.vert')
+         var fragCode = await get('/shaders/'+name+'.frag')
 
       function CreateShader(type,code){
          const shader = gl.createShader(type)
@@ -24,6 +31,8 @@ async function CreateShader(gl){
          gl.attachShader(program, vertShader);
          gl.attachShader(program, fragShader);
          gl.linkProgram(program);
+
+   SHADERCACHE[name] = {program}
 
     return {program}
     

@@ -39,38 +39,46 @@ function CreateControls(canvas){
    canvas.addEventListener("mousemove", mouseMove, false);
 }*/
 
-;(async function(){
+class Engine{
+   constructor(){
+      this.models = []
+   }
+   async load(){
 
-   var canvas = document.createElement('canvas')
-   canvas.width=600
-   canvas.height=600
-   document.body.append(canvas)
-   var gl = canvas.getContext('webgl2')
-
-
-
-   var model = new Model(gl, './models/worzala/worzala.gltf')
-   //mat4.scale(model.modelMatrix, model.modelMatrix, [3.0,3.0,3.0])
-
-
+      this.canvas = document.createElement('canvas')
+      this.canvas.width=600
+      this.canvas.height=600
+      document.body.append(this.canvas)
+      var gl = this.canvas.getContext('webgl2')
+      this.gl = gl
 
 
-   var proj_matrix = mat4.create()
-   mat4.perspective(proj_matrix, 45, canvas.width/canvas.height, 1, 100)
-   var view_matrix = mat4.create()
+      for(let index=0;index<16;index++){
+         var model = new Model(gl)
+         await model.CreateModel('./models/cube/cube.obj')
+         //mat4.scale(model.modelMatrix, model.modelMatrix, [3.0,3.0,3.0])
+         mat4.translate(model.modelMatrix,model.modelMatrix,[
+            5-Math.random()*10,
+            5-Math.random()*10,
+            5-Math.random()*10])
+         this.models.push(model)
+      }
 
-   view_matrix[14] = view_matrix[14]-6;
 
+
+      this.proj_matrix = mat4.create()
+      mat4.perspective(this.proj_matrix, 45, this.canvas.width/this.canvas.height, 1, 100)
    
-   
+      this.view_matrix = mat4.create()
+      this.view_matrix[14] = this.view_matrix[14]-16;
 
-   //CreateControls(canvas)
+      
+      
 
-
-
-
-
-   var animate = function(time) {
+      //CreateControls(canvas)
+   }
+   Render(time){
+      var gl = this.gl
       var dt = time-time_old;
 
       /*if (!drag) {
@@ -90,10 +98,25 @@ function CreateControls(canvas){
 
       gl.clearColor(0.5, 0.5, 0.5, 0.9);
       gl.clearDepth(1.0);
-      gl.viewport(0.0, 0.0, canvas.width, canvas.height);
+      gl.viewport(0.0, 0.0, this.canvas.width, this.canvas.height);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-      model.Render(proj_matrix,view_matrix)
+      for(const model of this.models){
+         model.Render(this.proj_matrix,this.view_matrix)
+      }
+   }
+}
+
+
+
+;(async function(){
+
+   var engine = new Engine()
+   await engine.load()
+
+   var animate = function(time) {
+
+      engine.Render(time)
 
       window.requestAnimationFrame(animate);
    }

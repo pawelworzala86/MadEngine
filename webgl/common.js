@@ -6,12 +6,18 @@ class Scene{
     }
     Render(proj_matrix,view_matrix,matrixParent=mat4.create()){
         for(let scene of this.childrens){
-            var matrix = mat4.create()
-            mat4.multiply(matrix,matrixParent,this.modelMatrix)
-            scene.Render(proj_matrix,view_matrix,matrix)
             if(scene.Draw){
+                var matrix = mat4.create()
+                mat4.multiply(matrix,matrixParent,this.modelMatrix)
                 scene.Draw(proj_matrix,view_matrix,matrix)
+            }else{
+                var matrix = mat4.create()
+                mat4.multiply(matrix,matrixParent,scene.modelMatrix)
+                scene.Render(proj_matrix,view_matrix,matrix)
             }
         }
     }
+}
+function deg2rad(deg){
+    return deg*(Math.PI/180)
 }
