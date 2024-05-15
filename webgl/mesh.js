@@ -54,7 +54,10 @@ class Mesh extends Scene{
 
       this.SetAttribute4M('Pmatrix', proj_matrix)
       this.SetAttribute4M('Vmatrix', view_matrix)
-      this.SetAttribute4M('Mmatrix', mo_matrix)
+
+      var matrix = mat4.create()
+      mat4.multiply(matrix,mo_matrix,this.modelMatrix)
+      this.SetAttribute4M('Mmatrix', matrix)
                
       if(this.geometry.indices){
          this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.buffer.indices);

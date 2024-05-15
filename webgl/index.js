@@ -64,6 +64,10 @@ class Engine{
          this.models.push(model)
       }
 
+      //var model = new Model(gl)
+      //await model.CreateModel('./models/worzala/worzala.gltf')
+      //this.models.push(model)
+
 
 
       this.proj_matrix = mat4.create()

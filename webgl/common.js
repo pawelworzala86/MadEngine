@@ -8,11 +8,12 @@ class Scene{
         for(let scene of this.childrens){
             if(scene.Draw){
                 var matrix = mat4.create()
+                //mat4.multiply(matrix,matrixParent,this.modelMatrix)
                 mat4.multiply(matrix,matrixParent,this.modelMatrix)
                 scene.Draw(proj_matrix,view_matrix,matrix)
             }else{
                 var matrix = mat4.create()
-                mat4.multiply(matrix,matrixParent,scene.modelMatrix)
+                mat4.multiply(matrix,matrixParent,this.modelMatrix)
                 scene.Render(proj_matrix,view_matrix,matrix)
             }
         }
