@@ -9,7 +9,7 @@ class Model extends Scene{
         //this.CreateModel(path)
     }
     async CreateModel(path){
-        var geometries = await loadOBJ(path)
+        /*var geometries = await loadOBJ(path)
         var shader = await CreateShader(this.gl)
 
         for(let geom of geometries){
@@ -17,7 +17,7 @@ class Model extends Scene{
             this.childrens.push(mesh)
         }
 
-        return
+        return*/
 
         var gltf = await loadGLTF(path)
         var shader = await CreateShader(this.gl)
@@ -46,7 +46,7 @@ class Model extends Scene{
             idx++
         }
 
-        //mat4.fromRotationTranslation(this.modelMatrix,[0,deg2rad(-90),0,0],[0,0,0])
+        //mat4.fromRotationTranslation(this.modelMatrix,[deg2rad(180),0,0,0],[0,0,0])
     }
 }
 

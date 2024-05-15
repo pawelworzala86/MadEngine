@@ -53,7 +53,7 @@ class Engine{
       this.gl = gl
 
 
-      for(let index=0;index<16;index++){
+      /*for(let index=0;index<16;index++){
          var model = new Model(gl)
          await model.CreateModel('./models/cube/cube.obj')
          //mat4.scale(model.modelMatrix, model.modelMatrix, [3.0,3.0,3.0])
@@ -62,11 +62,11 @@ class Engine{
             5-Math.random()*10,
             5-Math.random()*10])
          this.models.push(model)
-      }
+      }*/
 
-      //var model = new Model(gl)
-      //await model.CreateModel('./models/worzala/worzala.gltf')
-      //this.models.push(model)
+      var model = new Model(gl)
+      await model.CreateModel('./models/eline/eline.gltf')
+      this.models.push(model)
 
 
 
@@ -74,7 +74,7 @@ class Engine{
       mat4.perspective(this.proj_matrix, 45, this.canvas.width/this.canvas.height, 1, 100)
    
       this.view_matrix = mat4.create()
-      this.view_matrix[14] = this.view_matrix[14]-16;
+      this.view_matrix[14] = this.view_matrix[14]-4;
 
       
       
