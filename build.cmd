@@ -1,0 +1,1 @@
+asc ./src/madengine.ts --runtime stub -O3 --importMemory -o ./madengine.wasm
