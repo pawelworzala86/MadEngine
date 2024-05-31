@@ -9,6 +9,8 @@ class Model extends Scene{
         //this.CreateModel(path)
     }
     async CreateModel(path){
+        var gl = this.gl
+
         /*var geometries = await loadOBJ(path)
         var shader = await CreateShader(this.gl)
 
@@ -18,6 +20,8 @@ class Model extends Scene{
         }
 
         return*/
+
+        path = 'https://webgl2fundamentals.org/webgl/resources/models/killer_whale/whale.CYCLES.gltf';
 
         var gltf = await loadGLTF(path)
         var shader = await CreateShader(this.gl)
