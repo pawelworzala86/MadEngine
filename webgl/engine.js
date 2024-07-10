@@ -64,7 +64,10 @@ class Engine{
          this.models.push(model)
       }*/
 
-      var model = new Model(gl)
+      var shader = new Shader(this.gl)
+      await shader.load('color')
+
+      var model = new Model(gl,shader)
       await model.CreateModel('./models/eline/eline.gltf')
       this.models.push(model)
 

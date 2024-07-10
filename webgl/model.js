@@ -3,13 +3,15 @@ function deg2rad(deg){
 }
 
 class Model extends Scene{
-    constructor(gl){
+    constructor(gl,shader){
         super(gl)
         //this.mo_matrix = mat4.create()
         //this.CreateModel(path)
+        this.shader=shader
     }
     async CreateModel(path){
         var gl = this.gl
+        var shader = this.shader
 
         /*var geometries = await loadOBJ(path)
         var shader = await CreateShader(this.gl)
@@ -21,10 +23,10 @@ class Model extends Scene{
 
         return*/
 
-        path = 'https://webgl2fundamentals.org/webgl/resources/models/killer_whale/whale.CYCLES.gltf';
+        //path = 'https://webgl2fundamentals.org/webgl/resources/models/killer_whale/whale.CYCLES.gltf';
 
         var gltf = await loadGLTF(path)
-        var shader = await CreateShader(this.gl)
+        
     
         var idx = 0
         for(let geom of gltf.meshes){
