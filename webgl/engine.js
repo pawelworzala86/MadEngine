@@ -3,7 +3,7 @@ const vec3 = glMatrix.vec3
 
 var time_old = 0
 //controls
-/*
+
 var AMORTIZATION = 0.95
 var drag = false
 var old_x, old_y
@@ -37,7 +37,7 @@ function CreateControls(canvas){
    canvas.addEventListener("mouseup", mouseUp, false);
    canvas.addEventListener("mouseout", mouseUp, false);
    canvas.addEventListener("mousemove", mouseMove, false);
-}*/
+}
 
 class Engine{
    constructor(){
@@ -68,7 +68,7 @@ class Engine{
       await shader.load('color')
 
       var model = new Model(gl,shader)
-      await model.CreateModel('./models/eline/eline.gltf')
+      await model.CreateModel('./models/tst/scene.gltf')
       this.models.push(model)
 
 
@@ -82,21 +82,18 @@ class Engine{
       
       
 
-      //CreateControls(canvas)
+      CreateControls(this.canvas)
    }
    Render(time){
       var gl = this.gl
       var dt = time-time_old;
 
-      /*if (!drag) {
+      if (!drag) {
          dX *= AMORTIZATION, dY*=AMORTIZATION;
          THETA+=dX, PHI+=dY;
-      }*/
+      }
 
-      //model.modelMatrix = mat4.create()
-
-      //mat4.rotateY(model.modelMatrix,model.modelMatrix,THETA)
-      //mat4.rotateX(model.modelMatrix,model.modelMatrix,PHI)
+      
 
       time_old = time; 
       gl.enable(gl.DEPTH_TEST);
@@ -109,6 +106,11 @@ class Engine{
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
       for(const model of this.models){
+         model.modelMatrix = mat4.create()
+
+      mat4.rotateY(model.modelMatrix,model.modelMatrix,THETA)
+      mat4.rotateX(model.modelMatrix,model.modelMatrix,PHI)
+
          model.Render(this.proj_matrix,this.view_matrix)
       }
    }
